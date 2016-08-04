@@ -1,18 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include "discos.h"
 void main()
 {
     printf("****************Creacion de Discos*************\n");
     char *Entrada;
     int Error=0;
-    int si=0,un=0,pa=0,na=0,typ=0,fit=0,del=0,add=0,aum=0,kV=0,hV=0,mV=0, iV=0,comentario=0,bandera=0;
+    int si=0,un=0,pa=0,na=0,typ=0,fit=0,del=0,add=0,aum=0,kV=0,hV=0,mV=0, iV=0,comentario=0,bandera=0,nV=0;
     int mdisk=0,rmdisk=0,fdisk=0,mount=0,umount=0,df=0;
     size_t bufsize = 32;
     size_t characters;
      char *pi = NULL,*Pi = NULL,*Pd = NULL,*PD = NULL, *guio= NULL, *guion= NULL, *come=NULL, *KV1=NULL,*HV1=NULL,*MV1=NULL,*IV1=NULL;
 
     //valor a guardar
+     int sizeValor=1;
+     char *unitValor=NULL;
+     char *pathValor=NULL, *name=NULL;
 
     Entrada= (char *)malloc(bufsize * sizeof(char));
     if( Entrada == NULL)
@@ -141,6 +144,7 @@ void main()
                     si=1;
                     Error=1;
                 }else if(Error==1){
+                    sizeValor=atoi(token);
                     printf("Valor cuardado = %s \n",token);
                 }
 
@@ -150,7 +154,21 @@ void main()
                          un=1;
                           Error=2;
                 }else if(Error==2){
-                     printf("Valor cuardado = %s \n",token);
+                      i = strcasecmp(token,"k");
+                      if(i==0){
+                         unitValor=token;
+                      }else {
+                           i = strcasecmp(token,"m");
+                           if(i==0){
+                              unitValor=token;
+                           }else{
+                               printf("Solo puede seleccionar k o m");
+                           }
+
+                      }
+
+
+                     printf("Valor guardado en unitValor = %s \n",token);
                      }
            i = strcasecmp(token,"–path");
            j = strcasecmp(token,"-path");
@@ -159,6 +177,7 @@ void main()
                         pa=1;
                          Error=3;
                 }else if(Error==3){
+                     pathValor=token;
                    printf("Valor cuardado = %s \n",token);
                  }
            i = strcasecmp(token,"-name");
@@ -168,6 +187,7 @@ void main()
                               na=1;
                              Error=4;
                       }else if(Error==4){
+                           name=token;
                         printf("Valor cuardado = %s \n",token);
                   }
              i = strcasecmp(token,"+type");
@@ -228,7 +248,19 @@ void main()
 
 
     if( mdisk==1 & na==1 & pa==1 & si==1){
-       printf("Su disco fue generado\n");
+        int ver=0,ver2=0;
+         ver = strcasecmp(unitValor,"k");
+        if(ver == 0 || un==0){
+           sizeValor=sizeValor;
+            NewDisc(sizeValor,unitValor,pathValor,name);
+        }else if(ver2 == 0){
+           sizeValor=sizeValor*1024;
+               NewDisc(46854,unitValor,pathValor,name);
+        }else{
+           printf("Inserto mal los parametros solo puede seleccionar k o m");
+        }
+
+       printf("Su disco fue generado\n size= %d \n unit=%s \n path=%s \n nombre= %s",sizeValor,unitValor,pathValor,name);
     }else{
          if(mdisk==1){
        printf("No se puede crear el disco por falta de informacion \n");
