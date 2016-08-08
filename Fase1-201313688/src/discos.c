@@ -40,7 +40,7 @@ void NewDisc(int size, char unit, char *path, char *name){
         char * ruta= (char *) malloc(1 + strlen(un1)+ strlen(un2) );
         strcpy(ruta, un1);
         strcat(ruta, un2);
-           printf("%s dato \n",ruta);
+         //  printf("%s ************************************************************** dato \n",ruta);
 
        FILE *nuevoDisco;
         nuevoDisco=fopen(ruta,"w+b");

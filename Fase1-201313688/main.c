@@ -12,11 +12,12 @@ void main()
     size_t characters;
      char *pi = NULL,*Pi = NULL,*Pd = NULL,*PD = NULL, *guio= NULL, *guion= NULL, *come=NULL, *KV1=NULL,*HV1=NULL,*MV1=NULL,*IV1=NULL;
 
+
     //valor a guardar
-     int sizeValor=1;
+     int sizeValor=1,addVa=0;
      char *unitValor=NULL;
      char *pathValor=NULL, *name=NULL;
-
+ char *typeVa=NULL, *fitVa=NULL, *deleteVa=NULL;
     Entrada= (char *)malloc(bufsize * sizeof(char));
     if( Entrada == NULL)
     {
@@ -196,6 +197,7 @@ void main()
                            typ=1;
                            Error=5;
                        }else if(Error==5){
+                          typeVa=token;
                          printf("Valor cuardado = %s \n",token);
                    }
               i = strcasecmp(token,"+fit");
@@ -204,6 +206,7 @@ void main()
                              fit=1;
                              Error=6;
                        }else if(Error==6){
+                                 fitVa=token;
                          printf("Valor cuardado = %s \n",token);
                     }
             i = strcasecmp(token,"+delete");
@@ -212,6 +215,7 @@ void main()
                             del=1;
                             Error=7;
                       }else if(Error==7){
+                                deleteVa=token;
                         printf("Valor cuardado = %s \n",token);
                    }
             i = strcasecmp(token,"+add");
@@ -220,6 +224,7 @@ void main()
                             add=1;
                             Error=8;
                       }else if(Error==8){
+                            addVa=atoi(token);
                         printf("Valor cuardado = %s  add \n",token);
                    }
 
@@ -251,10 +256,12 @@ void main()
         int ver=0,ver2=0;
          ver = strcasecmp(unitValor,"k");
         if(ver == 0 || un==0){
+            printf("entra al k \n");
            sizeValor=sizeValor;
             NewDisc(sizeValor,unitValor,pathValor,name);
         }else if(ver2 == 0){
-           sizeValor=sizeValor*1024;
+           printf("entra al M \n");
+            sizeValor=sizeValor*1024;
                NewDisc(46854,unitValor,pathValor,name);
         }else{
            printf("Inserto mal los parametros solo puede seleccionar k o m");
@@ -277,6 +284,7 @@ void main()
     }
     if( fdisk==1 & na==1 & pa==1 & si==1){
        printf("Su particion fue generado\n");
+       printf("Su particion fue generado\n size= %d \n unit=%s \n path=%s \n nombre= %s, type=%s, fit=%s, delete=%s, add=%d",sizeValor,unitValor,pathValor,name,typeVa,fitVa,deleteVa,addVa);
     }else{
          if(fdisk==1){
        printf("No se puede crear la particion por falta de informacion \n");
